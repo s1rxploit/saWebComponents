@@ -1,6 +1,6 @@
 <?php
 require_once (dirname(__FILE__).'/lib_svardump.php');
-require_once (dirname(__FILE__).'/webappObfuscator/webappObfuscator-1.0.0/1.0.0/functions.php');
+require_once (dirname(__FILE__).'/saWebappObfuscator/webappObfuscator-1.0.0/1.0.0/functions.php');
 require_once (dirname(__FILE__).'/functions__internalErrorHandling.php');
 
 $woApacheErrorLogLocation = '/home/rene/data1/htdocs/logs/htdocs_new.localhost.error.log';
