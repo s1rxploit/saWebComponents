@@ -2,8 +2,8 @@
 //require_once(dirname(__FILE__).'/webappObfuscator.globals.php');
 
 
-require_once(dirname(__FILE__).'/../../functions__basicErrorHandling.php');
-require_once(dirname(__FILE__).'/../../functions__internalErrorHandling.php');
+require_once(dirname(__FILE__).'/../../saErrorHandlers/saBasicErrorHandling.php');
+require_once(dirname(__FILE__).'/../../saErrorHandlers/saInternalErrorHandling.php');
 require_once(dirname(__FILE__).'/1.0.0/functions.php');
 require_once(dirname(__FILE__).'/1.0.0/class.obfuscate.css.php');
 require_once(dirname(__FILE__).'/1.0.0/class.obfuscate.html.php');
