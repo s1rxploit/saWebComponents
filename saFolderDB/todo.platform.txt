@@ -1,0 +1,327 @@
+2016-08(Aug)-28(Sunday) 03:19am CEST
+
+This is a component i need for my seductiveapps.com web-3.0 framework.
+
+It's currently awaiting development.
+
+--- Design motivation
+
+Table data *SUCKS* when making user-interfaces in the browser, development is too complicated and takes too long, is too error prone, complicated apps "never get done afterall".. (my experience from desiging a tinymce.com based version-control enabled browser editor with about 10 SQL tables)..
+
+--- Design constrictions
+
+- Apache2+ and PHP5+ *only*.
+if you're a software developer, you wanna use ONE platform, not add a bunch of systemadministration knowledge that's different on each OS, ok... 
+PHP+MySQL+Apache is easy to use and install.. hence the request to add this simple thing (for the internals crew) into PHP[2]..
+
+
+--- Todo before development can start:
+
+- finish my https://github.com/seductiveapps/webappObfuscator (see https://github.com/seductiveapps/webappObfuscator/wiki for announcements and https://github.com/seductiveapps/webappObfuscator/tree/master/webappObfuscator__demoSite/public/webappObfuscator__output for sample output)
+	- finish the demo application and PHP website framework for noobish developers
+	- write some documentation (not too detailed, but detailed enough)
+	- write a quick install guide (and keep it short)
+
+- finish user-interface extension for seductiveapps framework;
+	- allow the user to resize dialogs based on mouse-input; aka drag the windows larger/smaller when hovering over sides or corners.. use the jQuery.com i already use for the dragging operations..
+		- add functions to vividDialog for dragging on sides (multiple PNG images to allow for glowing notification that the border can be dragged, use vividButton (full PNG animations with options using a "sprite" PNG image (sprite generator included in seductiveapps framework (done))).
+
+		- internal and relative to the PNG dialog background image resizing of content is *done*; i already built a small extension to CSS in JSON and javascript.
+
+
+--- Development time
+
+Somewhere within the next few months (see top of this file for last updated date).
+
+
+
+--- Development philosophy
+
+-- version 1.0 
+
+- Use multiple (many) small JSON files using apache2+ and php5+ infrastructure only
+
+- Aggregate JSON that's needed on the client side into custom larger files
+
+- Keep the aggregating logic as intuitive as humanly possible to keep performance optimal and debugging times down to near zero. 
+	- I can probably keep it fairly simple actually;
+	i'm thinking i evaluate what URL is called up in PHP, figure out what cache files are needed (i now use multiple stages of cache files for some stuff like the main HTML template), and output a new "master cache file" that is a file that gets called up rather quickly with readfile() after a file_exists(translateURLtoFilesystempath($untranslatedContentURL)) to see if regeneration for any particular URL is needed..
+
+	public function translateURLtoFilesystempath ($url) {
+            $r = $url;
+	    $r = str_replace('http://','--_', $r);
+	    $r = str_replace('https://','-__', $r);
+            $r = str_replace('/','---',$r);
+            $r = str_replace('?','-_-',$r);
+            $r = str_replace('&','__-',$r);
+            $r = str_replace('=','___',$r);
+            return '_-_'.$r;
+	}
+	
+	public function translateFilesystempathToURL ($path) {
+            $r = preg_replace ('#.*--_#', '', $path);
+	    $r = str_replace('--_', 'http://', $r);
+	    $r = str_replace('-__', 'https://',$r);
+            $r = str_replace('---','/',$r);
+            $r = str_replace('-_-','?',$r);
+            $r = str_replace('__-','&',$r);
+            $r = str_replace('___','=',$r);
+            return $r;
+	}
+
+-- version 2.0 (groundwork in version 1.0 as much as humanly possible): 
+
+- Fully utilize things like multiple machines, maybe even RAID clusters or even build in some kinda RAID functionality based on just a list of machines and disks in a machine..
+
+
+
+
+
+
+
+[1]
+---------- Forwarded message ----------
+From: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Date: Sun, Aug 28, 2016 at 2:24 AM
+Subject: Re: request for comments : https://github.com/seductiveapps/folderDB (a fully scalable JSON database architecture (currently in concept phase))
+To: php-general@lists.php.net
+
+
+reposted at https://forums.digitalpoint.com/threads/request-for-comments-https-github-com-seductiveapps-folderdb-a-fully-scalable-json-database-arc.2787055/
+
+On Sun, Aug 28, 2016 at 2:22 AM, Rene Veerman <rene.veerman.netherlands@gmail.com> wrote:
+my todo-file for the next 2 years.. :)
+
+{TODO FILE, replaced with an updated version listed at the top of this file}
+
+
+[2]
+---------- Forwarded message ----------
+From: Rene Veerman<rene.veerman.netherlands@gmail.com>
+Date: Sat, Aug 27, 2016 at 6:52 PM
+Subject: feature request : gzip caching
+To: php-general@lists.php.net, internals@lists.php.net
+
+
+Hi..
+
+First off, i love PHP. Many thanks for keeping it free too.
+
+However, i've noticed that gzipping the 1Mb of javascript that my seductiveapps.com needs, takes a relatively long time (measured over a total page load time which i'd like to bring down from it's current 10 seconds, about a second or even more is spent gzipping (by a core i5 machine))..
+
+At one time, i spent time building PHP code that cached the already-gzipped content and outputted that with just readfile().. But i never got it to work a second time, unfortunately..
+
+Could you pretty please add this to the core of PHP? Shouldn't be that hard for the internals team right?..
+
+Many thanks in advance for even considering to do this..
+
+with regards,
+Rene Veerman, 
+CEO + CTO of seductiveapps.com
+
+
+---------- Forwarded message ----------
+From: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Date: Sat, Aug 27, 2016 at 6:54 PM
+Subject: Re: feature request : gzip caching
+To: php-general@lists.php.net, internals@lists.php.net
+
+
+ideally this would be an extension to readfile, add a USE_GZIP optional flags parameter to the readfile() request...
+
+
+---------- Forwarded message ----------
+From: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Date: Sun, Aug 28, 2016 at 3:26 AM
+Subject: Fwd: [PHP] feature request : gzip caching
+To: php-general@lists.php.net, internals@lists.php.net
+
+
+
+---------- Forwarded message ----------
+From: Ashley Sheridan <ash@ashleysheridan.co.uk>
+Date: Sun, Aug 28, 2016 at 3:03 AM
+Subject: Re: [PHP] feature request : gzip caching
+To: Rene Veerman <rene.veerman.netherlands@gmail.com>
+
+
+Please don't top-post.
+
+Nginx was probably suggested as a lightweight web server, instead of Apache. I can't say I've ever seen both used at the same time.
+
+Any developer who is serious about their career has an understanding of how web servers work and the server caching capabilities. If they don't, I think it's fair to say they're still pretty junior and ideally would be helped by a more senior developer.
+
+I struggle to understand why you're making PHP responsible for trying to cache js files that are only requested by the front end. It feels like you're overcomplicating things somewhat.
+
+
+---------- Forwarded message ----------
+From: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Date: Sun, Aug 28, 2016 at 3:24 AM
+Subject: Re: [PHP] feature request : gzip caching
+To: Ashley Sheridan <ash@ashleysheridan.co.uk>, php-general@lists.php.net, internals@lists.php.net
+
+
+i'll top-post whenever i like.. don't tell other ppl how to format documentation / discussions, please.
+
+and to answer to your comment : i strongly disagree. it makes sense for those working on complicated webapps to limit the number of knowledge pools they must master and keep up to date..
+hell, i dont even get into canvas and webgl because the knowledge domain is so large and different from *my domain*; HTML, JS, CSS, JSON..
+seriously, you can not expect complicated beautiful apps to be written for browsers until you recognize that limitation on human ability..
+
+
+---------- Forwarded message ----------
+From: Joshua Kehn <josh.kehn@gmail.com>
+Date: Sun, Aug 28, 2016 at 3:37 AM
+Subject: Re: [PHP] feature request : gzip caching
+To: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Cc: php-general@lists.php.net, internals@lists.php.net
+
+
+Works on “complicated webapps” and “limits number of knowledge pools” are opposites. You need to find the right tool for the job. In this case, PHP is not the right tool.
+
+--jk
+
+
+---------- Forwarded message ----------
+From: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Date: Sun, Aug 28, 2016 at 3:39 AM
+Subject: Re: [PHP] feature request : gzip caching
+To: Joshua Kehn <josh.kehn@gmail.com>
+Cc: php-general@lists.php.net, internals@lists.php.net
+
+
+with all due respect, you sound like you don't know what you're talking about ok.. i rest my case at the arguments i presented, confident it'll convince the internals team (which is what this is *about*, ok)..
+
+
+---------- Forwarded message ----------
+From: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Date: Sun, Aug 28, 2016 at 3:42 AM
+Subject: Re: [PHP] feature request : gzip caching
+To: Joshua Kehn <josh.kehn@gmail.com>
+Cc: php-general@lists.php.net, internals@lists.php.net
+
+
+i did notice the -jk (meaning u were joking).. but i really dont appreciate trolling on subjects as fundamental (and to me at least; important), as this, ok..
+
+
+
+[3]
+---------- Forwarded message ----------
+From: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Date: Sun, Aug 28, 2016 at 5:07 AM
+Subject: feature-request : html + css logging in apache logs (example for the rest of the unix community too)
+To: php-general@lists.php.net, internals@lists.php.net
+
+
+Hi.
+
+Once again, thanks for keeping PHP free to use and so widely and easily installed..
+
+I have another feature request (sent earlier tonight)..
+
+I quite often, much more than i like, *need* a stacktrace and *proper* variable listings for each function called in PHP when it barfs out nothing more than an apache error log entry..
+And can we please show such entries in the browser *as well as the apache log*? Or if nothing else, *just* in the browser?
+
+Rather than going "all the way" and making variable contents (which can grow quite large) collapsable and shit *right away*, you could simply add the right <span> and <p> class="" names and supply a CSS file. I use it in all error handling that does make it to set_error_handler(myHandler), and that really is what makes things like my obfuscator (also posted about to the php-general@lists.php.net earlier tonight) possible.
+And taking things that far allows guys like me to provide you with a collapsable large-JSON-decoding viewer addon for such logfiles later (rest assured that that'll get done once you do this for me).. i call it jsonViewer and i should have it back up at http://seductiveapps.com/tools/json (or /jsonViewer) once the obfuscator is fully done in a few weeks, at most..
+
+if you want me to build (and opensource) things like that true-obfuscator and my JSON scalable database architecture using just apache2+ and php5+, it would really cut my development time in more than half if you could add "all of this" (it's deadsimple and a few hours work imo) to the next versions of PHP (and please make it the default, you can include sample CSS or read in a CSS file that you set in php.ini (comment on how to do this in the logfile html please))..
+
+see https://github.com/seductiveapps/folderDB/blob/master/todo.platform.txt for all relevant updates concerning these developments mentioned here..
+
+Thanks in advance for considering and likely adopting the 2 small changes i need in the next versions of PHP.. I run ubuntu btw.. I'll be checking the php.net pages for your future updates..
+
+If anyone can gimme a duration-to-completion for each of my requests of tonight, that'd be awesome. I'll take a "wild guess", or any serious objections that i might be able to sway out of the way..
+
+
+---------- Forwarded message ----------
+From: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Date: Sun, Aug 28, 2016 at 5:16 AM
+Subject: Re: feature-request : html + css logging in apache logs (example for the rest of the unix community too)
+To: php-general@lists.php.net, Internals <internals@lists.php.net>
+
+
+nothing's better than cut-n-pasting, i knooow :)
+
+so in the next few messages i'll include my own PHP handlers.. it's 4 files, which i'll just post as ordinary text.. dunno and dont wanna test if attaching works to the entire list architecture (web caches and stuff)..
+
+
+---------- Forwarded message ----------
+From: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Date: Sun, Aug 28, 2016 at 5:21 AM
+Subject: Re: feature-request : html + css logging in apache logs (example for the rest of the unix community too)
+To: php-general@lists.php.net, Internals <internals@lists.php.net>
+
+
+all are donated to public domain : 
+{SNIP LONG EMAIL THATS BETTER COMMUNICATED WITH THE NEXT MESSAGE}
+
+
+---------- Forwarded message ----------
+From: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Date: Sun, Aug 28, 2016 at 5:28 AM
+Subject: Re: feature-request : html + css logging in apache logs (example for the rest of the unix community too)
+To: php-general@lists.php.net, Internals <internals@lists.php.net>
+
+
+eh oops, this would've maybe been easier, and allows me to update these sources in the future if and when needed..
+
+https://github.com/seductiveapps/webappObfuscator/blob/master/webappObfuscator-1.0.0/functions__basicErrorHandling.php
+https://github.com/seductiveapps/webappObfuscator/blob/master/webappObfuscator-1.0.0/1.0.0/functions.php
+https://github.com/seductiveapps/webappObfuscator/blob/master/webappObfuscator-1.0.0/functions__internalErrorHandling.php
+light background css : https://github.com/seductiveapps/webappObfuscator/blob/master/webappObfuscator-1.0.0/webappObfuscator-1.0.0__ajax.css
+dark background css : https://github.com/seductiveapps/webappObfuscator/blob/master/webappObfuscator-1.0.0/webappObfuscator-1.0.0.css
+
+[4]
+
+---------- Forwarded message ----------
+From: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Date: Sun, Aug 28, 2016 at 6:55 AM
+Subject: announcing public release of jsonViewer and saJSON
+To: php-general@lists.php.net, Internals <internals@lists.php.net>
+
+
+i'm gonna re-opensource these in the future anyhow for that update to the PHP error handling, so i thought it would be nice to release what i got now (should work, may need a tiny bit of work by you)..
+
+perhaps *you* can include it in the following package{3}? nice challenge perhaps..? :)
+
+https://github.com/seductiveapps/webappObfuscator/blob/master/webappObfuscator-1.0.0/functions__basicErrorHandling.php
+https://github.com/seductiveapps/webappObfuscator/blob/master/webappObfuscator-1.0.0/1.0.0/functions.php
+https://github.com/seductiveapps/webappObfuscator/blob/master/webappObfuscator-1.0.0/functions__internalErrorHandling.php
+light background css : https://github.com/seductiveapps/webappObfuscator/blob/master/webappObfuscator-1.0.0/webappObfuscator-1.0.0__ajax.css
+dark background css : https://github.com/seductiveapps/webappObfuscator/blob/master/webappObfuscator-1.0.0/webappObfuscator-1.0.0.css
+
+
+jsonViewer provides :
+- a pure-PHP encoder for JSON that can handle JSON in the range of at least 100MB to maybe 1GB or more (provided you provide enough RAM ofcourse)
+- JS that outputs HTML that actually can view such large arrays, tested with sample JSON file[1] of 100MB in 2013
+- runs in all browsers, smartphones iPhone6+ and Android 4.2+ too
+- initially fully-collapsed view of your data showing just the root keys
+- ability to open keys by clicking on them, or up to the required depth (opening-links for all up to the max depth too)
+- pretty colors, auto-generated from easy templates (https://github.com/seductiveapps/saColorGradients)
+- a bunch of other convenient and if i may say so myself, technically impressive features
+
+URLs
+
+https://github.com/seductiveapps/jsonViewer
+which requires
+  https://github.com/seductiveapps/saColorGradients
+and
+  https://github.com/seductiveapps/saJSON
+
+NOTES
+
+see also my feature request to internals@lists.php.org, included here:
+
+from my master todo file at https://github.com/seductiveapps/folderDB/blob/master/todo.platform.txt ;
+[3]
+---------- Forwarded message ----------
+From: Rene Veerman <rene.veerman.netherlands@gmail.com>
+Date: Sun, Aug 28, 2016 at 5:07 AM
+Subject: feature-request : html + css logging in apache logs (example for the rest of the unix community too)
+To: php-general@lists.php.net, internals@lists.php.net
+
+
+Hi.
+
+Once again, thanks for keeping PHP free to use and so widely and easily installed..
+.,...........see https://github.com/seductiveapps/folderDB/blob/master/todo.platform.txt, search for [3] for a copy of the rest of this thread.............. and [4] for *this* email thread you're reading now..

@@ -1,0 +1,93 @@
+--- Development philosophy
+
+-- version 1.0 
+
+- Use multiple (many) small JSON files using apache2+ and php5+ infrastructure only
+
+- Aggregate JSON that's needed on the client side into custom larger files
+
+- Keep the aggregating logic as intuitive as humanly possible to keep performance optimal and debugging times down to near zero. 
+	- I can probably keep it fairly simple actually;
+	i'm thinking i evaluate what URL is called up in PHP, figure out what cache files are needed (i now use multiple stages of cache files for some stuff like the main HTML template), and output a new "master cache file" that is a file that gets called up rather quickly with readfile() after a file_exists(translateURLtoFilesystempath($untranslatedContentURL)) to see if regeneration for any particular URL is needed..
+
+	public function translateURLtoFilesystempath ($url) {
+            $r = $url;
+	    $r = str_replace('http://','--_', $r);
+	    $r = str_replace('https://','-__', $r);
+            $r = str_replace('/','---',$r);
+            $r = str_replace('?','-_-',$r);
+            $r = str_replace('&','__-',$r);
+            $r = str_replace('=','___',$r);
+            return '_-_'.$r;
+	}
+	
+	public function translateFilesystempathToURL ($path) {
+            $r = preg_replace ('#.*--_#', '', $path);
+	    $r = str_replace('--_', 'http://', $r);
+	    $r = str_replace('-__', 'https://',$r);
+            $r = str_replace('---','/',$r);
+            $r = str_replace('-_-','?',$r);
+            $r = str_replace('__-','&',$r);
+            $r = str_replace('___','=',$r);
+            return $r;
+	}
+
+-- folderDB's configuration file :
+<?php
+$folderDB = require_once('.../path/to/folderDB/boot.php');
+
+// set up configuration
+// set up configuration
+$database_options = array(
+	'name' => 'myFolder',
+	'storage' => array (
+            'path' => './myFolder', // Location to store files (file-path)
+        ),
+	'requires' => array(	
+		'mongo' => array(
+			'stage0__boot' => array (
+				'connectionString' => 'mongodb://localhost:27017/test',
+				'collectionPrefix' => 'myfolder'
+			)
+		),
+		'jQuery' => array (
+			'stage0__boot' => array (
+				'CDN_address' => 'https://code.jquery.com/jquery-1.12.4.min.js', // supports older OS versions
+				'CDN_include_code__html' => '<script   src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>'
+			)
+		),
+		'jQueryUI' => array (
+			'stage0__boot' => array (
+				'CDN_address' => 'https://code.jquery.com/ui/1.11.4/jquery-ui.min.js', // supports older OS versions
+				'CDN_include_code__html' => '<script   src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"   integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw="   crossorigin="anonymous"></script>'
+			)
+		)
+
+	),
+	'optionalComponents' => array(
+		'myComponentzName' => array (
+			'stage0__boot.php' => array(
+				'currentVersion' => '1.0.0' // 1.0.0 is to point to a folder like .../FolderDB/code/1.0.0/boot.php
+			)
+		)
+	)
+);
+ 
+$folderDB_options = array (
+    'database_options' => $database_options
+);
+
+// init a local folder for storing files
+$myFolder = new folderDB($folderDB_options);
+$myFolder->setOptions($folderDB_options)
+OR
+$myFolder = new folderDB($folderDB_options);
+?>
+
+	
+
+-- version 2.0 (groundwork in version 1.0 as much as humanly possible): 
+
+- Fully utilize things like multiple machines, maybe even RAID clusters or even build in some kinda RAID functionality based on just a list of machines and disks in a machine..
+
+

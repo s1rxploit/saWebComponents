@@ -1,0 +1,2 @@
+<meta name="keywords" content="debug, debugger, error, errors, error catcher, trace, sa.tracer, javascript, php, complete"/>
+<meta name="description" content="lucidLog gives you all your PHP notices, warnings and errors plus all of your javascript function calls in a tidy interface. undergoing active development (2013/June)."/>
