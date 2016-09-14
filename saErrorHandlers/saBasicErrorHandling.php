@@ -262,13 +262,18 @@ function woBasicErrorHandler__prettyBacktrace ($st, $haveEchoedCSSforColors=fals
 			.' )</span>'."\r\n";
 			
 		//if ($stackNumber > 0) { // ignore the call to saBasicErrorHandler() itself
-			$r .= 
-				"\t".'<div class="woStacktrace__item">'."\r\n"
-				.$line.' in '
-				.$file.' called<br/>'
-				.$function
-				.'which then called : <br/>'."\r\n"
-				."\t".'</div>'."\r\n";
+		if (count($st)-1 > $stackNumber) {
+                    $whichThenCalled = ' which then called ';
+                } else {
+                    $whichThenCalled = '';
+                }
+                $r .= 
+                    "\t".'<div class="woStacktrace__item">'."\r\n"
+                    .$line.' in '
+                    .$file.' called<br/>'
+                    .$function
+                    .$whichThenCalled 
+                    ."\t".'</div>'."\r\n";
 		//}
 	};
 	
@@ -286,7 +291,16 @@ function woBasicErrorHandler__prettyBacktrace__arguments ($args) {
                 $jsonArgHTML = str_replace ("\r", '<br/>', $jsonArg);
                 $jsonArgHTMLentities = $jsonArgHTML; //htmlentities($jsonArgHTML);
             */
-                $argEntities = htmlentities($arg);
+                if (is_string($arg)) {
+                    $argEntities = htmlentities($arg);
+                } if (
+                    is_array($arg)
+                    || is_object($arg)
+                ) {
+                    $argEntities = '<pre class="woStacktrace__arg__jsonEncoded woStacktrace__arg">'.json_encode ($arg, JSON_PRETTY_PRINT).'</pre>';
+                } else {
+                    $argEntities = $arg;
+                }
 	
 		if (is_array($arg)) {
 			$r .= '<span class="woStacktrace__arg__'.$argIdx.' woStacktrace__arg">'.$argEntities.'</span>';

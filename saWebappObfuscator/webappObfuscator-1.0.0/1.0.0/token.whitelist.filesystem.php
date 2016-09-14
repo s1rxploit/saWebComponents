@@ -1,4 +1,5 @@
 <?php
+require_once (dirname(__FILE__).'/../../../saFileSystem.php');
 
 global $wo__ignoreList__filesystem_rootPath; // set in .../globals.php
 if (false) {

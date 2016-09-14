@@ -1,6 +1,7 @@
 <?php 
 //OBSOLETED require_once (dirname(__FILE__).'/webappObfuscator.globals.php');
 require_once (dirname(__FILE__).'/webappObfuscator-1.0.0.php');
+require_once (dirname(__FILE__).'/../../saFileSystem.php');
 
 $webappObfuscator__factorySettings = array (
   'logLevel' => 500,

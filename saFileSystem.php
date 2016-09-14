@@ -63,20 +63,22 @@ function fgetsr ($filePath) {
 	}
 }
 
-if (!function_exists('filesizeHumanReadable')) {
-// duplicated in webappObfuscator-1.0.0/functions.php
-	function filesizeHumanReadable ($size) {
-		$scale = "KMGT";
-		$scaleIdx = -1;
+function filesizeHumanReadable ($size) {
+	$scale = "KMGT";
+	$scaleIdx = -1;
 
-		$s = $size;
-		while ($s / 1024 > 1) {
-			$s = $s / 1024;
-			$scaleIdx++;
-			$result= round($s,2)."$scale[$scaleIdx]";
-		}
-		return $result."b";
-	}
+	$result = '';
+	$s = $size;
+	if ($s > 1024) {
+            while ($s / 1024 > 1) {
+                    $s = $s / 1024;
+                    $scaleIdx++;
+                    $result = round($s,2)."$scale[$scaleIdx]";
+            }
+	} else {
+            $result = $s;
+        }
+	return $result."b, ".$size." bytes";
 }
 
 function zipExtractUnix ($filename, $targetDir) { //TODO: MB_PLATFORM define fix
@@ -175,8 +177,6 @@ if (!function_exists('createDirectoryStructure')) {
 	}
 }
 
-if (!function_exists('createDirectoryStructure')) {
-
 function getFilePathList ( 
 //TODO: relatively untested complicated function, might be buggy
 	
@@ -241,6 +241,7 @@ another example:
 	//if (!in_array("file",$fileTypesFilter)) $fileTypesFilter[count($fileTypesFilter)]="file";
 	//htmlOut (" --== $path ==--");
 	if ($path[strlen($path)-1]!="/") $path.="/";
+	//reportVariable ('$path', $path); die();
 	if ($handle = opendir($path)) {
 		/* This is the correct way to loop over the directory. */
 		while (false !== ($file = readdir($handle))) { 
@@ -311,8 +312,6 @@ another example:
 	}
 	//htmlDump ($result, "result");
 	return $result;
-}
-
 }
 
 function readIniFile ($fileName) {
