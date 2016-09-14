@@ -4,11 +4,13 @@ require_once (dirname(__FILE__).'/../../../saFileSystem.php');
 global $wo__ignoreList__filesystem_rootPath; // set in .../globals.php
 if (false) {
     echo '$wo__ignoreList__filesystem_rootPath=<pre>'; var_dump ($wo__ignoreList__filesystem_rootPath); echo '</pre>'; 
-    echo '$wo__ignoreList__filesystem_rootPath=<pre>'; var_dump (file_exists($wo__ignoreList__filesystem_rootPath[1])); echo '</pre>'; 
+    echo 'file_exists($wo__ignoreList__filesystem_rootPath[1])=<pre>'; var_dump (file_exists($wo__ignoreList__filesystem_rootPath[1])); echo '</pre>'; 
     die();
 }
 
 foreach ($wo__ignoreList__filesystem_rootPath as $idx => $rootPath) {
+    //reportVariable ('$rootPath', $rootPath, false);
+    $tokensFilesystem = array();
     if (
     !is_string($rootPath)
     || !file_exists($rootPath)
@@ -33,7 +35,7 @@ foreach ($wo__ignoreList__filesystem_rootPath as $idx => $rootPath) {
             return false;
         } else {
             $files = result($files);
-            echo '$files=<pre>'; var_dump ($files); echo '</pre>'; die();
+            //echo '$files=<pre>'; var_dump ($files); echo '</pre>'; die();
         
             $debugTokensFilesystem = false;
             if ($debugTokensFilesystem) { echo 'token.whitelist.filesystem.php:::$files=<pre>'; var_dump ($files); echo '</pre>'; }
@@ -61,12 +63,17 @@ foreach ($wo__ignoreList__filesystem_rootPath as $idx => $rootPath) {
                 }
                 
             }
-    }
+        }
     
-    $wo__ignoreList__filesystem = array_unique($tokensFilesystem);
-    if ($debugTokensFilesystem)  { echo 'token.whitelist.filesystem.php:::$wo__ignoreList__filesystem=<pre>'; var_dump ($wo__ignoreList__filesystem); echo '</pre>'; }
-    global $wo__ignoreList__filesystem;
     }
+    if (!is_null($tokensFilesystem)) {
+        $wo__ignoreList__filesystem = array_unique($tokensFilesystem);
+    } else {
+        $wo__ignoreList__filesystem = array();
+    }
+    global $wo__ignoreList__filesystem;
+    //reportVariable ('$wo__ignoreList__filesystem' , $wo__ignoreList__filesystem);
+    if ($debugTokensFilesystem)  { echo 'token.whitelist.filesystem.php:::$wo__ignoreList__filesystem=<pre>'; var_dump ($wo__ignoreList__filesystem); echo '</pre>'; }
 }
 if ($debugTokensFilesystem) die();
 

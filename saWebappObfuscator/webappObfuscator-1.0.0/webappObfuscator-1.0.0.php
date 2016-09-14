@@ -31,7 +31,14 @@ require_once(dirname(__FILE__).'/1.0.0/token.whitelist.lib.tinymce.php');
 
 // $wo__ === Webapp Obfuscator global variable
 global $wo__ignoreList__site;
-if (!isset($wo__ignoreList__site)) $wo__ignoreList__site = array();
+//reportVariable ('$wo__ignoreList__site 1', $wo__ignoreList__site);
+if (
+    !isset($wo__ignoreList__site)
+    || is_null($wo__ignorelist__site)
+) $wo__ignoreList__site = array();
+
+//reportVariable ('$wo__ignoreList__site 2', $wo__ignoreList__site);
+
 $wo__tokens__ignoreList = array_unique(array_merge(
 	// ignoreList === whitelist
 	$wo__ignoreList__site,
@@ -54,6 +61,24 @@ global $wo__tokens__ignoreList;
 $wo__tokens__ignoreList__allLowercase = array_map ('strtolower', $wo__tokens__ignoreList);
 global $wo__tokens__ignoreList__allLowercase;
 
+if (is_null($wo__ignoreList__site)) reportVariable('$wo__ignoreList__site', $wo__ignoreList__site);
+if (is_null($wo__ignoreList__filesystem)) reportVariable('$wo__ignoreList__filesystem', $wo__ignoreList__filesystem);
+if (is_null($wo__ignoreList__misc)) reportVariable('$wo__ignoreList__misc', $wo__ignoreList__misc);
+if (is_null($wo__ignoreList__browser__firefox)) reportVariable('$wo__ignoreList__browser__firefox', $wo__ignoreList__browser__firefox);
+if (is_null($wo__ignoreList__browser__internetExplorer)) reportVariable('$wo__ignoreList__browser__internetExplorer', $wo__ignoreList__browser__internetExplorer);
+if (is_null($wo__ignoreList__canvas)) reportVariable('$wo__ignoreList__canvas', $wo__ignoreList__canvas);
+if (is_null($wo__ignoreList__company__google)) reportVariable('$wo__ignoreList__company__google', $wo__ignoreList__company__google);
+if (is_null($wo__ignoreList__css)) reportVariable('$wo__ignoreList__css', $wo__ignoreList__css);
+if (is_null($wo__ignoreList__html)) reportVariable('$wo__ignoreList__html', $wo__ignoreList__html);
+if (is_null($wo__ignoreList__json)) reportVariable('$wo__ignoreList__json', $wo__ignoreList__json);
+if (is_null($wo__ignoreList__javascript)) reportVariable('$wo__ignoreList__javascript', $wo__ignoreList__javascript);
+if (is_null($wo__ignoreList__lib__jquery)) reportVariable('$wo__ignoreList__lib__jquery', $wo__ignoreList__lib__jquery);
+if (is_null($wo__ignoreList__lib__jquery_history)) reportVariable('$wo__ignoreList__lib__jquery_history', $wo__ignoreList__lib__jquery_history);
+if (is_null($wo__ignoreList__seductiveapps)) reportVariable('$wo__ignoreList__seductiveapps', $wo__ignoreList__seductiveapps);
+if (is_null($wo__ignoreList__lib__tinymce)) reportVariable('$wo__ignoreList__lib__tinymce', $wo__ignoreList__lib__tinymce);
+
+//reportVariable ('$wo__tokens__ignoreList', $wo__tokens__ignoreList); // ,false);  === continue executing script
+//reportVariable ('$wo__tokens__ignoreList__allLowercase', $wo__tokens__ignoreList__allLowercase);
 
 
 
@@ -430,6 +455,13 @@ class webappObfuscator {
 				'mixed'   		---> $sources must be as if $sources===null (multi-level array)
 		*/
 		global $wo__tokens__ignoreList;
+		if (
+		  !isset($wo__tokens__ignoreList)
+		  || !is_array($wo__tokens__ignoreList)
+		) {
+		  $wo__tokens__ignoreList = array();
+		}
+		global $wo__ignoreList__site;
 		if (
 		  !isset($wo__ignoreList__site)
 		  || !is_array($wo__ignoreList__site)

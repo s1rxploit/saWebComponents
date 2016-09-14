@@ -311,7 +311,7 @@ another example:
 		}
 	}
 	//htmlDump ($result, "result");
-	return $result;
+	return goodResult($result);
 }
 
 function readIniFile ($fileName) {

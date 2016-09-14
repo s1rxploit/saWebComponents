@@ -80,7 +80,7 @@ function fetchSources ($sources, $path='') {
 	$r = array();
 	
 	foreach ($sources as $k => $v) {
-		if (is_string($v)) {
+		if (is_string($v) && $v!=='') {
 			$fullPath = $path.'/'.$k;
 			//echo '<pre style="color:red;">223='; var_dump ($fullPath); echo '</pre>';
 			if (
@@ -98,9 +98,10 @@ function fetchSources ($sources, $path='') {
 			};
 			
 			$v = str_replace(' ', '%20', $v);
-                        reportVariable (__FILE__.'::fetchSources() : $v', $v);
+                        //reportVariable (__FILE__.'::fetchSources() : $v', $v);
 			$c = file_get_contents($v.$params);
-			if ($v===false) {
+			
+			if ($c===false) {
 			  $err = array(
 			    'msg' => 'webappObfuscator-1.0.0/1.0.0/functions.php : file not found',
 			    'file' => $v.$params
