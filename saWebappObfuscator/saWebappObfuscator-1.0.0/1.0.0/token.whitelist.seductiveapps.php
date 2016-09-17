@@ -20,7 +20,9 @@ $wo__ignoreList__seductiveapps = array (
   //'backgrounds', 'space', 
   
   //sa_treeDB
-    'music'
+    'music',
+    
+    'misc', 'm', 
   
 );
 $wo__ignoreList__seductiveapps = array_unique ($wo__ignoreList__seductiveapps);

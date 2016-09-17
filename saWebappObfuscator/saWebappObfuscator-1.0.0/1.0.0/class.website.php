@@ -222,7 +222,7 @@ class woWebsite { // webappObfuscatorWebsite
   public function displaySite($template=null, $untranslatedContentURL='/', $params=null, $obfuscated=true) {
     //$vars = $this->resolveDisplayVars($vars);
     
-    
+    //reportVariable ('$obfuscated', $obfuscated);
     global $webappObfuscator__clientSettings;
     $wo_pw = $webappObfuscator__clientSettings['password'];
     
@@ -478,6 +478,7 @@ class woWebsite { // webappObfuscatorWebsite
     $content = $content['content'];
 
     
+    //reportVariable ('$obfuscated', $obfuscated);
     $call = $ssc->getTemplateVarsForTemplate($template, $untranslatedContentURL, null, $obfuscated);
     /* DO NOT USE $ssc->getTemplateVarsForTemplate
       for any variables listed below here, all of these functions $this->get{something}() call 
@@ -494,22 +495,24 @@ class woWebsite { // webappObfuscatorWebsite
       'definition_ipad_tags' => $this->getIPadTags($template, $untranslatedContentURL, null, $obfuscated)
     );
 
+    /*
     if ($obfuscated===true) {
-        $extra = array(
-        'headCSS' => $this->getHeadCSS ($template, $untranslatedContentURL, null, $obfuscated),
-        'headJavascript' => $this->getHeadJavascript ($template, $untranslatedContentURL, null, $obfuscated)
-        );
-        $r = array_merge(
-        $tvfst,
-        $extra,
-        $ssctv
-        );
     } else {
         $r = array_merge(
         $tvfst,
         $ssctv
         );
-    }
+    }*/
+    $extra = array(
+    'headCSS' => $this->getHeadCSS ($template, $untranslatedContentURL, null, $obfuscated),
+    'headJavascript' => $this->getHeadJavascript ($template, $untranslatedContentURL, null, $obfuscated)
+    );
+    $r = array_merge(
+    $tvfst,
+    $extra,
+    $ssctv
+    );
+    
     return $r;
   }
   
@@ -1485,6 +1488,7 @@ class woWebsite { // webappObfuscatorWebsite
       $r .= $this->getHeadJavascript__CLEARTEXT_links ($cc);
     }
     
+    reportVariable ('$obfuscated 1', $obfuscated);
     $r .= $ssc->getHeadJavascript ($cc, $template, $untranslatedContentURL, $params, $obfuscated);
     
     return $r;
