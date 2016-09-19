@@ -30,11 +30,13 @@ foreach ($wo__ignoreList__filesystem_rootPath as $idx => $rootPath) {
         
         $files = getFilePathList ($rootPath, true, '/.*/', $what);
         //echo '$files=<pre>'; var_dump ($files); echo '</pre>'; die();
+        /*
         if (!good($files)) {
             //badResult ($files); // SHOWS WAY TOO MUCH SECRET INFORMATION! DO ***NOT*** use on a live website
             return false;
         } else {
-            $files = result($files);
+        */
+            //$files = result($files);
             //echo '$files=<pre>'; var_dump ($files); echo '</pre>'; die();
         
             $debugTokensFilesystem = false;
@@ -63,7 +65,7 @@ foreach ($wo__ignoreList__filesystem_rootPath as $idx => $rootPath) {
                 }
                 
             }
-        }
+       //}
     
     }
     if (!is_null($tokensFilesystem)) {

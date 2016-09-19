@@ -199,7 +199,8 @@ function getFilePathList (
 	/*	on windows XP, cTime = creation time; mTime = modified time; aTime = access time. 
 		I also noted some BUGS in retrieving these dates from my system.
 	*/
-	$listCall = ""						// interesting feature; lets you include results from any informational file function(s).
+	$listCall = "",						// interesting feature; lets you include results from any informational file function(s).
+        $returnGoodResult = true
 /*	TODO : fix $*Date* parameter handling, 
 	returns an array consisting of all files in a directory structure, filtered by the parameters given.
 	results are returned in directory order. if ($recursive) then subdirectory content is listed before file content.
@@ -304,14 +305,20 @@ another example:
 				$subdir = getFilePathList ($filepath,$recursive, $fileSpecRE, 
 					$fileTypesFilter, $ownerFilter, $fileSizeMin, $fileSizeMax, 
 					$aTimeMin, $aTimeMax, $mTimeMin, $mTimeMax,
-					$cTimeMin, $cTimeMax, $listCall);
+					$cTimeMin, $cTimeMax, $listCall,false);
 				array_splice ($result, count($result)+1, 0, $subdir);
 			}
 		}
 		}
 	}
 	//htmlDump ($result, "result");
-	return goodResult($result);
+	/* recursion problems :( --- if ($returnGoodResult) {
+            return goodResult($result);
+        } else {
+            return $result;
+        }
+        */
+        return $result;
 }
 
 function readIniFile ($fileName) {

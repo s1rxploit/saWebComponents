@@ -426,7 +426,7 @@ class woWebsite { // webappObfuscatorWebsite
       }
 
       //var_dump ($obfuscated); die();
-      $templateVars = $this->getTemplateVarsForTemplate ($template, $untranslatedContentURL, $params, $obfuscated);
+      $templateVars = $this->getTemplateVarsForTemplate ($cc, $template, $untranslatedContentURL, $params, $obfuscated);
       if (array_key_exists('wo_templateOnly', $_GET)) {
         unset ($templateVars['content']);
         unset ($templateVars['headJavascript']);
@@ -456,7 +456,7 @@ class woWebsite { // webappObfuscatorWebsite
     //}
   }
   
-  public function getTemplateVarsForTemplate ($template=null, $untranslatedContentURL=null, $params=null, $obfuscated=true) {
+  public function getTemplateVarsForTemplate ($cc=null, $template=null, $untranslatedContentURL=null, $params=null, $obfuscated=true) {
     global $woWebsite; // PHP class from webappObfuscator-1.0.0/boot.php
     global $woWebsite__factorySettings; // from webappObfuscator-1.0.0/boot.php
     global $woWebsite__clientSettings; // from webappObfuscator-1.0.0/boot.php
@@ -504,8 +504,8 @@ class woWebsite { // webappObfuscatorWebsite
         );
     }*/
     $extra = array(
-    'headCSS' => $this->getHeadCSS ($template, $untranslatedContentURL, null, $obfuscated),
-    'headJavascript' => $this->getHeadJavascript ($template, $untranslatedContentURL, null, $obfuscated)
+    'headCSS' => $this->getHeadCSS ($cc, $template, $untranslatedContentURL, null, $obfuscated),
+    'headJavascript' => $this->getHeadJavascript ($cc, $template, $untranslatedContentURL, null, $obfuscated)
     );
     $r = array_merge(
     $tvfst,
@@ -1463,7 +1463,7 @@ class woWebsite { // webappObfuscatorWebsite
 	  return $r;
   }
 	
-  public function NEWPROBLEMATIC__getHeadJavascript ($template=null, $untranslatedContentURL=null, $params=null, $obfuscated=true) {
+  /*public function NEWPROBLEMATIC__getHeadJavascript ($template=null, $untranslatedContentURL=null, $params=null, $obfuscated=true) {
     global $woWebsite; // PHP class from webappObfuscator-1.0.0/boot.php
     global $woWebsite__factorySettings; // from webappObfuscator-1.0.0/boot.php
     global $woWebsite__clientSettings; // from webappObfuscator-1.0.0/boot.php
@@ -1474,8 +1474,8 @@ class woWebsite { // webappObfuscatorWebsite
     global $saConfig__saCloud;
     global $seductiveapps_installedApps;
       
-    global $saCMS; // PHP class from siteFramework-pw-*/*/com/cms/boot.php
-    global $saCMS__settings; // from siteFramework-pw-*/*/com/cms/boot.php
+    global $saCMS; // PHP class from siteFramework-pw-* /* /com/cms/boot.php
+    global $saCMS__settings; // from siteFramework-pw-* / * /com/cms/boot.php
     $cc = $this->clientSettings['siteSpecificFiles']; // === saConfig__saCloud()
     $ssc = $this->clientSettings['siteSpecificCMS'];
     
@@ -1492,9 +1492,9 @@ class woWebsite { // webappObfuscatorWebsite
     $r .= $ssc->getHeadJavascript ($cc, $template, $untranslatedContentURL, $params, $obfuscated);
     
     return $r;
-  }
+  }*/
 	
-	public function getHeadJavascript ($template=null, $untranslatedContentURL=null, $params=null, $obfuscated=true) {
+	public function getHeadJavascript ($cc=null, $template=null, $untranslatedContentURL=null, $params=null, $obfuscated=true) {
 	  global $woWebsite; // PHP class from webappObfuscator-1.0.0/boot.php
 	  global $woWebsite__factorySettings; // from webappObfuscator-1.0.0/boot.php
 	  global $woWebsite__clientSettings; // from webappObfuscator-1.0.0/boot.php
@@ -1509,6 +1509,8 @@ class woWebsite { // webappObfuscatorWebsite
 	  global $saCMS__settings; // from siteFramework-pw-* /* /com/cms/boot.php
 	  $cc = $woWebsite__clientSettings['siteSpecificFiles']; // === $saConfig__saCloud
 	  $ssc = $woWebsite->clientSettings['siteSpecificCMS'];
+	  
+	  //reportVariable ('$obfuscated', $obfuscated);
 
 	  $fn2 = $cc['currentDomain']['master']['hd'].'/webappObfuscator__output/javascript/siteTemplate.complete.js';
 	  //if (file_exists($fn2)) {
@@ -1522,7 +1524,7 @@ class woWebsite { // webappObfuscatorWebsite
 	    $r = '<script type="text/javascript" src="'.$url.'"></script>';
 	    return $r;
 	  } else {
-            $r = $this->getHeadJavascript_do ($template, $untranslatedContentURL, $params, $obfuscated);
+            $r = $this->getHeadJavascript_do ($cc, $template, $untranslatedContentURL, $params, $obfuscated);
 	  };
 	  
           $r .= $ssc->getHeadJavascript ($cc, $template, $untranslatedContentURL, $params, $obfuscated);
@@ -1530,7 +1532,7 @@ class woWebsite { // webappObfuscatorWebsite
 	}	
 
 	
-	public function getHeadJavascript_do ($template=null, $untranslatedContentURL=null, $params=null, $obfuscated=true) {
+	public function getHeadJavascript_do ($cc=null, $template=null, $untranslatedContentURL=null, $params=null, $obfuscated=true) {
 	  global $woWebsite; // PHP class from webappObfuscator-1.0.0/boot.php
 	  global $woWebsite__factorySettings; // from webappObfuscator-1.0.0/boot.php
 	  global $woWebsite__clientSettings; // from webappObfuscator-1.0.0/boot.php
@@ -1548,6 +1550,7 @@ class woWebsite { // webappObfuscatorWebsite
 	  $obfuscate = !$this->usePlaintextOutput();
 	  $obfuscator = $webappObfuscator;
 	  
+	  //reportVariable ('$obfuscated', $obfuscated);
 	
 		$locMedia = $this->getLocation__media();
 		$locMediaURL = $locMedia['url'];
@@ -1567,7 +1570,7 @@ class woWebsite { // webappObfuscatorWebsite
 		called up by .../obfuscate_sa-pw-EA8zj30.z-3_KLp2/ajax_obfuscate.php
 		*/
 		
-		$call = $ssc->getHeadJavascript__JSON__vividThemes($cc);
+		$call = $ssc->getHeadJavascript__JSON__vividThemes($cc, $template, $untranslatedContentURL, $params, $obfuscated);
 		$vividThemesJS = $call['jsonThemes'];
 		//echo 'class.main.php:::getHeadJavascript_do(): $vividThemesJS=<pre>'; var_dump ($vividThemes); echo '</pre>'; die();
 		/*global $cms;
@@ -1582,7 +1585,8 @@ class woWebsite { // webappObfuscatorWebsite
 		
 		
 		//var_dump ($obfuscate);die();
-		if ($this->usePlaintextOutput()) {
+		//if ($this->usePlaintextOutput()) {
+		if ($obfuscated===false) {
 			$r .= $this->getHeadJavascript__CLEARTEXT_links ($cc);
 		} else {
 			$fn = $cc['currentDomain']['master']['hd'].'/webappObfuscator__output/javascript/siteTemplate.js';

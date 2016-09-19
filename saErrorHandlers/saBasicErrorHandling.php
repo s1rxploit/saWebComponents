@@ -95,6 +95,7 @@ function cssForErrorReport () {
         ."\t".'.woStacktrace__file { background : lime; color : navy; font-weight: bold; }'."\r\n"
         ."\t".'.woStacktrace__line { background : lime; color : black; font-weight : bold; font-size : 110%;  }'."\r\n"
         ."\t".'.woStacktrace__function { color : lime; margin-left : 10px; }'."\r\n"
+        ."\t".'.woStacktrace__functionName { font-size : 110%; color : lime; background : blue; margin-left : 10px; }'."\r\n"
         ."\t".'.woStacktrace__args { font-weight : normal; }'."\r\n"
         ."\t".'.woStacktrace__arg { color : black; }'."\r\n"
         ."\t".'.woStacktrace__argSeperator { color : white; font-weight : bold; font-size : 100%; }'."\r\n"
@@ -213,6 +214,8 @@ function woBasicErrorHandler ($errno, $errstr, $errfile, $errline, $errcontext, 
 function woBasicErrorHandler__prettyBacktrace ($st, $haveEchoedCSSforColors=false, $wantColors=true) {
 	//global $errorsBasepath; // may not be necessary to put $errorsBasepath in another PHP file elsewhere in the filesystem.
 	
+	$callstackOrder_lastFirst = false;
+	
 	//echo '$errorsBasePath=<pre>'; var_dump ($errorsBasepath); echo '</pre>'; die();
 	if (true) { //is_null($errorsBasepath)) {
             // YOUR CHOICE : $errorsBasepath = dirname(__FILE__).'/../../..';
@@ -239,7 +242,9 @@ function woBasicErrorHandler__prettyBacktrace ($st, $haveEchoedCSSforColors=fals
             
         // top - down does seem best.. 
         //$st = array_reverse ($st); // feel free to use this setting
-        $st = array_reverse ($st); 
+        if ($callstackOrder_lastFirst===true) {
+            $st = array_reverse ($st);
+        }
             
 	foreach ($st as $stackNumber => $stackData) {
 		if (array_key_exists('file', $stackData)) {
@@ -266,15 +271,19 @@ function woBasicErrorHandler__prettyBacktrace ($st, $haveEchoedCSSforColors=fals
 			
 		//if ($stackNumber > 0) { // ignore the call to saBasicErrorHandler() itself
 		if (count($st)-1 > $stackNumber) {
-                    $whichThenCalled = ' which then called ';
+                    if ($callstackOrder_lastFirst===true) {
+                        $whichThenCalled = ' which then called ';
+                    } else {
+                        $whichThenCalled = ' which was called by';
+                    }
                 } else {
                     $whichThenCalled = '';
                 }
                 $r .= 
                     "\t".'<div class="woStacktrace__item">'."\r\n"
-                    .$line.' in '
-                    .$file.' called<br/>'
-                    .$function
+                    .$line.' in'
+                    .$file.'<br/> called '
+                    .'<span class="woStacktrace__functionName">'.$function.'</span> '
                     .$whichThenCalled 
                     ."\t".'</div>'."\r\n";
 		//}

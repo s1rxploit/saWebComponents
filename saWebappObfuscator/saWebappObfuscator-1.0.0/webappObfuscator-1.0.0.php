@@ -15,7 +15,7 @@ require_once(dirname(__FILE__).'/1.0.0/class.website.php');
 require_once(dirname(__FILE__).'/1.0.0/token.whitelist.misc.php'); // anything that don't fit in it's own category can go in this file
 
 require_once(dirname(__FILE__).'/1.0.0/token.whitelist.seductiveapps.php'); 
-require_once(dirname(__FILE__).'/1.0.0/token.whitelist.filesystem.php'); 
+//require_once(dirname(__FILE__).'/1.0.0/token.whitelist.filesystem.php'); 
 
 require_once(dirname(__FILE__).'/1.0.0/token.whitelist.browser.firefox.php');
 require_once(dirname(__FILE__).'/1.0.0/token.whitelist.browser.internetExplorer.php');
@@ -42,7 +42,7 @@ if (
 $wo__tokens__ignoreList = array_unique(array_merge(
 	// ignoreList === whitelist
 	$wo__ignoreList__site,
-	$wo__ignoreList__filesystem, 
+	//$wo__ignoreList__filesystem, 
 	$wo__ignoreList__misc, 
 	$wo__ignoreList__browser__firefox,
 	$wo__ignoreList__browser__internetExplorer,
@@ -62,7 +62,7 @@ $wo__tokens__ignoreList__allLowercase = array_map ('strtolower', $wo__tokens__ig
 global $wo__tokens__ignoreList__allLowercase;
 
 if (is_null($wo__ignoreList__site)) reportVariable('$wo__ignoreList__site', $wo__ignoreList__site);
-if (is_null($wo__ignoreList__filesystem)) reportVariable('$wo__ignoreList__filesystem', $wo__ignoreList__filesystem);
+//if (is_null($wo__ignoreList__filesystem)) reportVariable('$wo__ignoreList__filesystem', $wo__ignoreList__filesystem);
 if (is_null($wo__ignoreList__misc)) reportVariable('$wo__ignoreList__misc', $wo__ignoreList__misc);
 if (is_null($wo__ignoreList__browser__firefox)) reportVariable('$wo__ignoreList__browser__firefox', $wo__ignoreList__browser__firefox);
 if (is_null($wo__ignoreList__browser__internetExplorer)) reportVariable('$wo__ignoreList__browser__internetExplorer', $wo__ignoreList__browser__internetExplorer);
